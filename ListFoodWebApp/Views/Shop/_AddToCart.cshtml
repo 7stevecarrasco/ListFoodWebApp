@@ -1,0 +1,39 @@
+﻿@model ListFoodWebApp.Models.FoodCategory
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="row">
+    <div class="col-12 text-center">
+        @if (string.IsNullOrEmpty(Model.FoodCategoryImageName))
+        {
+            <img class="card-img-top mb-3 shadow-lg white rounded" style="max-width: 250px; max-height: 250px;" src="/Images/foodcategory-placeholder-image.png" alt="foodcategory-image">
+        }
+        else
+        {
+            <img class="card-img-top mb-3 shadow-lg white rounded" style="max-width: 250px; max-height: 250px;" src="/Images/@Model.FoodCategoryImageName" alt="foodcategory-image">
+        }
+    </div>
+    @{
+        var numId = "num" + Model.FoodCategoryID;
+    }
+    <div class="col-12" style="text-align:center">
+        <h3><span id="@Model.FoodCategoryID" href="javascript:void(0)" onclick="">@Html.DisplayFor(modelItem => Model.Name)</span></h3>
+        <hr />
+       
+        <div class="row">
+            <div class="col-12">
+                <label style="font-weight: 500;" for="@numId">Quantity:</label>
+                <input type="number" step="1" value="1" min="1" max="100" id="@numId">
+            </div>
+            <div class="col-12">
+                <a href="javascript:void(0)" id="@Model.FoodCategoryID" onclick="AddToCart(this.id)" class="btn btn-primary btn-block">Add</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

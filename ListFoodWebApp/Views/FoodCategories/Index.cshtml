@@ -1,0 +1,170 @@
+﻿@model IEnumerable<ListFoodWebApp.Models.FoodCategory>
+
+@{ ViewData["Title"] = "Index"; }
+
+<main class="container">
+    <div class="row pt-2 pb-2">
+        <div class="col">
+            <h1>Food Categories</h1>
+        </div>
+        <div class="col">
+            <p style="text-align: right; ">
+                <a href="javascript:void(0)" onclick="CreateCall()" class="btn btn-primary">Add New Category</a>
+            </p>
+        </div>
+    </div>
+    <hr />
+</main>
+
+<div class="container">
+    <div class="row text-center">
+        @await Html.PartialAsync("_CarouselViewFoodCategory", Model)
+    </div>
+</div>
+
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-3 border-right" id="foodmenu">
+            @await Html.PartialAsync("_TreeViewFoodCategory", Model)
+        </div>
+
+        <div class="col-9">
+            <div id="mainSectionContainer">
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="createModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title text-center">Create Food Category</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title text-center">Edit Food Category</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    #foodmenu ul li {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        position: relative;
+    }
+
+    #foodmenu ul {
+        padding: 0;
+        margin: 0;
+    }
+
+    #foodmenu .edit-btn {
+        position: absolute;
+        right: 10px;
+        top: 2px;
+    }
+
+    #foodmenu ul ul {
+        padding-left: 15px;
+    }
+</style>
+@section scripts{
+    <script>
+        $('#foodmenu>ul ul').hide();
+        $('#foodmenu>ul>li').hide();
+
+        function CreateCall() {
+            $.get("@Url.Action("Create","FoodCategories")/",
+                function (data) {
+                    $('.modal-body').html(data);
+                });
+
+            $("#createModal").modal("show");
+        }
+
+        function EditCall(id) {
+            $.get("@Url.Action("Edit","FoodCategories")/" + id,
+                function (data) {
+                    $('.modal-body').html(data);
+                });
+
+            $("#editModal").modal("show");
+        }
+
+        $('body').on('change',
+            '#customCreateFile',
+            function() {
+
+                var fileName = this.files[0].name;
+                console.log(fileName);
+                $(this).next('.custom-file-label').html(fileName);
+            });
+        $('body').on('change', '#customEditFile', function () {
+
+            var fileName = this.files[0].name;
+            console.log(fileName);
+            $(this).next('.custom-file-label').html(fileName);
+        })
+    </script>
+
+    <script>
+        function ExpandCollapseMenu($this, id) {
+            loadChildSection(id);
+            $('#foodmenu>ul li'+'.' + id).show();
+            $('.' + id).children('ul').slideToggle(function () {
+                if (!$('.' + id).children('ul').is(":hidden")) {
+                    $('.' + id +'>div').children("i").addClass("fa-caret-down");
+                    $('.' + id+'>div').children("i").removeClass("fa-caret-right");
+                } else {
+                    $('.' + id + '>div').children("i").addClass("fa-caret-right");
+                    $('.' + id + '>div').children("i").removeClass("fa-caret-down");
+                }
+            });
+        }
+
+        function loadMainSection(id) {
+            $('#foodmenu>ul ul').hide();
+            $('#foodmenu>ul>li').hide();
+            $.get("@Url.Action("LoadProductByCategory", "FoodCategories")/" + id,
+                function (data) {
+                    $('#mainSectionContainer').html(data);
+                    $('#foodmenu>ul>li').hide();
+                    $('.' + id).css('display', 'block');
+                    $('.' + id +'>ul').slideToggle(function () {
+                        if (!$('.' + id +'>ul').is(":hidden")) {
+                            $('.' + id +'>div').children("i").addClass("fa-caret-down");
+                            $('.' + id +'>div').children("i").removeClass("fa-caret-right");
+                        } else {
+                            $('.' + id +'>div').children("i").removeClass("fa-caret-down");
+                            $('.' + id + '>div').children("i").addClass("fa-caret-right");
+                        }
+                    })
+
+                });
+        }
+
+        function loadChildSection(id) {
+            $.get("@Url.Action("LoadProductByCategory", "FoodCategories")/" + id,
+                function (data) {
+                    $('#mainSectionContainer').html(data);
+                });
+        }
+
+    </script>
+}

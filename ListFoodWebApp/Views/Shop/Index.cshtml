@@ -1,0 +1,213 @@
+﻿@model IEnumerable<ListFoodWebApp.Models.FoodCategory>
+
+@{ ViewData["Title"] = "Index"; }
+
+<main class="container">
+    <link rel="stylesheet" href="https://cdnjs.cloudfare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <div class="row pt-2 pb-2">
+        <div class="col">
+            <a type="button" class="btn btn-primary btn-lg " asp-area="" asp-controller="ViewOrders" asp-action="Index">View All List</a>
+            <a type="button" class="btn btn-primary btn-lg " asp-area="" asp-controller="Cart" asp-action="Index"> View List</a>
+
+
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row text-center">
+            @await Html.PartialAsync("_CarouselViewFoodCategory", Model)
+        </div>
+    </div>
+    
+    <hr />
+</main>
+
+<div class="container">
+    <div class="row text-center">
+        @if (ViewBag.Open == false)
+        {
+            <h2 style="color: red;">The current order window is closed or there is currently no future event scheduled at this time.</h2>
+        }
+
+    </div>
+</div>
+
+
+
+<div class="container">
+   
+        <div  id="foodmenu">
+            @await Html.PartialAsync("_TreeViewFoodCategory", Model)
+        </div>
+
+        <div >
+            <div id="mainSectionContainer">
+
+            </div>
+        </div>
+    
+</div>
+
+<div class="modal fade" id="AddToCart" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title text-center">Add To Cart</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    #foodmenu ul li {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        position: relative;
+    }
+
+    #foodmenu ul {
+        padding: 0;
+        margin: 0;
+    }
+
+    #foodmenu .edit-btn {
+        position: absolute;
+        right: 10px;
+        top: 2px;
+    }
+
+    #foodmenu ul ul {
+        padding-left: 15px;
+    }
+
+    .hidden {
+        display: none;
+    }
+    .card {
+        margin-bottom: 20px;
+    }
+
+    .card-img-top {
+        width: 200px;
+        height: 200px;
+        align-self: center;
+</style>
+
+@section scripts{
+    <script>
+        $('#foodmenu>ul ul').hide();
+        $('#foodmenu>ul>li').hide();
+
+        function AddToCartModal(id) {
+            $.get("@Url.Action("AddToCartModal","Shop")/" + id,
+                function (data) {
+                    $('.modal-body').html(data);
+                });
+
+            $("#AddToCart").modal("show");
+        }
+
+        function AddToCart(btnId) {
+                var amount = $('#num' + btnId).val();
+                var duBlueCow = { Id: btnId, Amount: amount };
+                var duBlueCowString = JSON.stringify(duBlueCow);
+
+                $.ajax(
+                    {
+                        type: 'POST',
+                        url: '@Url.Action("AddToCart", "Shop")',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: duBlueCowString,
+                        success: function (data) {
+                            //alert(btnId);
+
+                        },
+                        error: function (data) {
+                            alert('failed!');
+                        }
+                    });
+            $('#AddToCart').modal('hide');
+        }
+
+        function ExpandCollapseMenu($this, id) {
+            loadChildSection(id);
+            $('#foodmenu>ul li'+'.' + id).show();
+            $('.' + id).children('ul').slideToggle(function () {
+                if (!$('.' + id).children('ul').is(":hidden")) {
+                    $('.' + id +'>div').children("i").addClass("fa-caret-down");
+                    $('.' + id+'>div').children("i").removeClass("fa-caret-right");
+                } else {
+                    $('.' + id + '>div').children("i").addClass("fa-caret-right");
+                    $('.' + id + '>div').children("i").removeClass("fa-caret-down");
+                }
+            });
+        }
+
+        function loadMainSection(id) {
+            $('#foodmenu>ul ul').hide();
+            $('#foodmenu>ul>li').hide();
+            $.get("@Url.Action("LoadProductByCategory", "Shop")/" + id,
+                function (data) {
+                    $('#mainSectionContainer').html(data);
+                        $('#foodmenu>ul>li').hide();
+                    $('.' + id).css('display', 'block');
+                    $('.' + id +'>ul').slideToggle(function () {
+                        if (!$('.' + id +'>ul').is(":hidden")) {
+                            $('.' + id +'>div').children("i").addClass("fa-caret-down");
+                            $('.' + id +'>div').children("i").removeClass("fa-caret-right");
+                        } else {
+                            $('.' + id +'>div').children("i").removeClass("fa-caret-down");
+                            $('.' + id + '>div').children("i").addClass("fa-caret-right");
+                        }
+                    })
+
+                });
+        }
+
+        function loadChildSection(id) {
+            $.get("@Url.Action("LoadProductByCategory", "Shop")/" + id,
+                function (data) {
+                    $('#mainSectionContainer').html(data);
+
+                });
+        }
+    </script>
+    <script>
+        var divs = ["fruit", "vegi", "grains", "dairy", "protein", "essentials"];
+        var visibleDivId = null;
+        function divVisibility(divId) {
+            if (visibleDivId === divId) {
+                visibleDivId = null;
+            } else {
+                visibleDivId = divId;
+            }
+            hideNonVisibleDivs();
+        }
+        function hideNonVisibleDivs() {
+            var i, divId, div;
+            for (i = 0; i < divs.length; i++) {
+                divId = divs[i];
+                div = document.getElementById(divId);
+                if (visibleDivId === divId) {
+                    div.style.display = "block";
+
+                } else {
+                    div.style.display = "none";
+                }
+            }
+        }
+
+        $(document).on("click", ".open-homeEvents", function () {
+            var eventId = $(this).data('id');
+            $('#idHolder').html(eventId);
+        })
+
+
+
+    </script>
+}

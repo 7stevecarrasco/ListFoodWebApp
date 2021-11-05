@@ -1,0 +1,93 @@
+﻿@model ListFoodWebApp.Models.Item
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>
+    @Html.DisplayFor(model => model.Name)
+</h1>
+
+<div>
+    <hr />
+    <p style="text-align:center;"><img src="~/images/granolaBar.jfif" alt="image" /></p>
+    <p style="text-align:center; font-weight:bold;">
+        Quantity: &nbsp;<input type="number" id="ItemQuantity" name="ItemQQuantity" min="1" max="15" placeholder="1">&nbsp;&nbsp;
+        <button style="color:cornflowerblue;">Add To Cart</button>
+    </p>
+    <h4>Nutritional Information:</h4>
+    <br />
+
+    <dl class="row" >
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Calories) :
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Calories)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Fiber) (g) :
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Fiber)
+        </dd>
+        <dt class="col-sm-2">
+            Vitamin A (IU) :
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VitaminA)
+        </dd>
+        <dt class="col-sm-2">
+            Vitamin C (mg) :
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VitaminC)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Protein) (g) :
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Protein)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Calcium) (mg) :
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Calcium)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Iron) (mg) :
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Iron)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Sodium) (mg) :
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Sodium)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AddedSugar) (g) :
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AddedSugar)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SaturatedFat) (g) :
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SaturatedFat)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FoodCategory) :
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FoodCategory.Name)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ItemID" class="btn btn-primary btn-lg">Edit</a>
+    <a asp-action="Index" class="btn btn-danger btn-lg">Back</a>
+</div>

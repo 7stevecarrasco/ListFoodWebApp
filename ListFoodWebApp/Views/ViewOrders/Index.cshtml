@@ -1,0 +1,53 @@
+﻿@model IEnumerable<ListFoodWebApp.Models.Order>
+
+@{
+    ViewData["Title"] = "Orders";
+}
+
+<div class="mt-4 mb-4">
+    <h1>All the Lists</h1>
+</div>
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Order ID</th>
+            <th scope="col">Status</th>
+            <th scope="col">Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.OrderID">
+                        @Html.DisplayFor(modelItem => item.OrderID.ToString().ToUpper().Split('-', StringSplitOptions.None)[0])
+                    </a>
+                </td>
+             
+                <td>
+                    @switch (item.Status)
+                    {
+                        case Order.StatusType.ListSubmitted:
+                            @Html.Raw("List Submitted");
+                            break;
+                        case Order.StatusType.ListCancelled:
+                            @Html.Raw("List Cancelled");
+                            break;
+                        case Order.StatusType.FinishedList:
+                            @Html.Raw("Finished List");
+                            break;
+                        default:
+                            break;
+                    }
+                </td>
+             
+                <td>
+                    @Html.Raw(item.DateOrdered.ToShortDateString())
+                </td>
+
+            </tr>
+        }
+
+    </tbody>
+</table>

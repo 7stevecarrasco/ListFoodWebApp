@@ -1,0 +1,72 @@
+﻿@model IEnumerable<ListFoodWebApp.Models.ViewModels.ShoppingList>
+
+@{
+    ViewData["Title"] = "Order Items";
+}
+
+<h1>Order Items</h1>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    /*$('#UpdateStatus').click(*/
+    function UpdateStatus() {
+        var orderID = '@ViewBag.OrderId';
+        var status = document.getElementById("OrderStatus").value;
+        var duBlueCow = { OrderID: orderID, Status: status};
+        var duBlueCowString = JSON.stringify(duBlueCow);
+        $.ajax(
+            {
+                type: 'POST',
+                url: '@Url.Action("UpdateOrderStatus", "ViewOrders")',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: duBlueCowString,
+                success: function (data) {
+                    window.location.href = '/ViewOrders/Index';
+                },
+                error: function (data) {
+                    alert('failed!');
+                }
+            });
+    }
+</script>
+
+<form>
+    <label for="OrderStatus">Order Status:</label>
+    <select id="OrderStatus" class="custom-select">
+        @foreach (var option in ViewBag.StatusList)
+        {
+            if (option.Value == ViewBag.Status.ToString())
+            {
+                <option selected value="@option.Value">@option.Text</option>
+            }
+            else
+            {
+                <option value="@option.Value">@option.Text</option>
+            }
+        }
+    </select>
+    <a href="javascript:void(0)" id="UpdateStatus" onclick="UpdateStatus()" class="mt-2 btn btn-primary">Update</a>
+</form>
+<br />
+<br />
+@foreach (var orderedItem in Model)
+{
+    <div>
+        <div class="card m-2">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-dark list-group-item- align-middle">
+                    <div class="d-flex">
+                        <div>
+                            <img class="img-thumbnail mt-1" style="max-width: 50px ; max-height: 100px;"
+                                 src="/Images/@orderedItem.FoodIcon" alt="FoodIcon">
+                        </div>
+                        <div class="p-2 pt-3">@orderedItem.FoodName</div>
+                        <div class="p-2 pt-3 ml-auto">
+                            Qty: @orderedItem.Quantity
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+}

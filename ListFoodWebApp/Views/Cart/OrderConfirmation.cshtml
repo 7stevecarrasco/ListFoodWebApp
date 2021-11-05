@@ -1,0 +1,18 @@
+﻿@model ListFoodWebApp.Models.Order
+
+
+<h2>Today is: @Model.PickupDate</h2>
+<a type="button" class="btn btn-primary btn-lg btn-block" asp-area="" asp-controller="ViewOrders" asp-action="Index">View List</a>
+
+<div id="getOrder">
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+          $.get("@Url.Action("GetAllOrders", "Cart")",
+                function (data) {
+                    $('#getOrder').html(data);
+                });
+    });
+</script>

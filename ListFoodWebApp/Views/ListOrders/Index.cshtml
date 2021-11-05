@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ListFoodWebApp.Models.Order>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="mt-4 mb-4">
+    <h1>Order List</h1>
+</div>
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Order ID</th>
+            <th scope="col">Event Name</th>
+            <th scope="col">Status</th>
+            <th scope="col">Pickup Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderID.ToString().ToUpper().Split('-',StringSplitOptions.None)[0])
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Event.Title)
+            </td>
+            <td>
+                @switch (item.Status)
+                {
+                    case Order.StatusType.ListSubmitted:
+                        @Html.Raw("List Submitted");
+                        break;
+                    case Order.StatusType.FinishedList:
+                        @Html.Raw("Finished List");
+                        break;
+                    case Order.StatusType.ListCancelled:
+                        @Html.Raw("List Cancelled");
+                        break;
+                        default:
+                            break;
+                    }
+            </td>
+            <td>
+                @Html.Raw(item.PickupDate.ToShortDateString())
+            </td>
+
+        </tr>
+        }
+
+    </tbody>
+</table>
+

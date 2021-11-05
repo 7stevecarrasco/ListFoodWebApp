@@ -1,0 +1,13 @@
+﻿@model IEnumerable<FoodCategory>
+
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col">
+                @if (item.Active)
+                {
+                    <h5><a id="@item.FoodCategoryID" href="javascript:void(0)" onclick="ChildrenCall(this.id)">@Html.DisplayFor(modelItem => item.Name)</a></h5>
+                }
+            </div>
+        }
+    </div>

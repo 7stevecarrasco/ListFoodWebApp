@@ -1,0 +1,365 @@
+﻿@model ListFoodWebApp.Models.ViewItem
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+
+
+<title>List</title>
+<style>
+    .hidden {
+        display: none;
+    }
+
+
+    body {
+        padding-top: 80px;
+    }
+
+    .show-cart li {
+        display: flex;
+    }
+
+    .card {
+        margin-bottom: 20px;
+    }
+
+    .card-img-top {
+        width: 200px;
+        height: 200px;
+        align-self: center;
+    }
+</style>
+<script>
+    var divs = ["fruit", "vegi", "grains", "dairy", "protein", "essentials"];
+    var visibleDivId = null;
+    function divVisibility(divId) {
+        if (visibleDivId === divId) {
+            visibleDivId = null;
+        } else {
+            visibleDivId = divId;
+        }
+        hideNonVisibleDivs();
+    }
+    function hideNonVisibleDivs() {
+        var i, divId, div;
+        for (i = 0; i < divs.length; i++) {
+            divId = divs[i];
+            div = document.getElementById(divId);
+            if (visibleDivId === divId) {
+                div.style.display = "block";
+
+            } else {
+                div.style.display = "none";
+            }
+        }
+    }
+
+    $(document).on("click", ".open-homeEvents", function () {
+        var eventId = $(this).data('id');
+        $('#idHolder').html(eventId);
+    })
+
+
+
+</script>
+
+<nav class="navbar navbar-inverse bg-inverse fixed-top bg-faded">
+    <div class="row">
+        <div class="col">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cart">Cart (<span class="total-count"></span>)</button>
+            <button class="clear-cart btn btn-danger">Clear Cart</button>
+        </div>
+    </div>
+</nav>
+
+
+
+<h1>List</h1>
+<div class="buttons">
+    <ul class="nav nav-pills nav-fill">
+        <li class="nav-item active">
+            <a class="nav-link" data-toggle="tab" href="#" onclick="divVisibility('fruit')">Fruit</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#" onclick="divVisibility('vegi')">Vegetables</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#" onclick="divVisibility('grains')">Grains</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#" onclick="divVisibility('dairy')">Dairy</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#" onclick="divVisibility('protein')">Protein</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#" onclick="divVisibility('essentials')">Essentials</a>
+        </li>
+    </ul>
+</div>
+                                       
+<form asp-action="Create">
+    <div class="inner_div">
+        <div id="fruit" class="hidden">
+            <h1>Fruits</h1>
+            <div class="container">
+                <div class="row">
+                    <div class="card col-lg-3 col-sm-6  text-center">
+                        <img class="card-img-top" src="Images/Fruit/42E9as7NaTaAi4A6JcuFwG-1200-80.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <label asp-for="itemName" class="card-title text-center" id="textName">Bannanas</label>
+                            <input asp-for="itemName" type="text" />
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                        </div>
+                    </div>
+
+                    <div class="card col-lg-3 col-sm-6  text-center">
+                        <img class="card-img-top" src="Images/Fruit/tangerines-close-up-royalty-free-image-966415250-1552676109.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <label asp-for="itemName" class="card-title text-center" id="textName">Manderines</label>
+                            <input asp-for="itemName" type="text" />
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                        </div>
+                    </div>
+                    <div class="card col-lg-3 col-sm-6  text-center">
+                        <img class="card-img-top" src="Images/Fruit/109-1095681_citrullus-cut-food-fruit-watermelon-parfait-lanatus-watermelon.png" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Watermelon</h5>
+                            <a href="#" class="btn btn-primary add-to-cart">Add</a>
+                        </div>
+                    </div>
+                    <div class="card col-lg-3 col-sm-6  text-center">
+                        <img class="card-img-top" src="Images/Fruit/Grapes.jpg">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Grapes</h5>
+                            <a href="#" class="btn btn-primary add-to-cart">Add</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="vegi" class="hidden">
+            <h1>
+                Vegetables
+            </h1>
+            <div class="container">
+                <div class="row">
+                    <div class="card col-lg-3 col-sm-6  text-center">
+                        <img class="card-img-top" src="Images/Vegi/1371616351150.jpeg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Tomato</h5>
+                            <a href="#" class="btn btn-primary">Add</a>
+                        </div>
+                    </div>
+
+                    <div class="card col-lg-3 col-sm-6  text-center">
+                        <img class="card-img-top" src="Images/Vegi/Celery.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Celery</h5>
+                            <a href="#" class="btn btn-primary text-center">Add</a>
+                        </div>
+                    </div>
+                    <div class="card col-lg-3 col-sm-6  text-center">
+                        <img class="card-img-top" src="Images/Vegi/Spinach-for-Babies-scaled.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Spinach</h5>
+                            <a href="#" class="btn btn-primary">Add</a>
+                        </div>
+                    </div>
+                    <div class="card col-lg-3 col-sm-6  text-center">
+                        <img class="card-img-top" src="Images/Vegi/brave-heart-romaine-lettuce.jpg">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Lettuce</h5>
+                            <a href="#" class="btn btn-primary">Add</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div id="grains" class="hidden">
+            <h1>
+                Grains
+            </h1>
+            <div class="container">
+                <div class="row">
+                    <div class="card col-lg-3 col-sm-6  text-center">
+                        <img class="card-img-top" src="Images/Grains/high-angle-view-of-breakfast-cereals-served-in-royalty-free-image-742259785-1543862988.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Cereal</h5>
+                            <a href="#" class="btn btn-primary">Add</a>
+                        </div>
+                    </div>
+
+                    <div class="card col-lg-3 col-sm-6  text-center">
+                        <img class="card-img-top" src="Images/Grains/Fresh_made_bread_05.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Bread</h5>
+                            <a href="#" class="btn btn-primary text-center">Add</a>
+                        </div>
+                    </div>
+                    <div class="card col-lg-3 col-sm-6  text-center">
+                        <img class="card-img-top" src="Images/Grains/AdobeStock_281164530_1024x1024.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Oatmeal</h5>
+                            <a href="#" class="btn btn-primary">Add</a>
+                        </div>
+                    </div>
+                    <div class="card col-lg-3 col-sm-6  text-center">
+                        <img class="card-img-top" src="Images/Grains/Almond_edited-scaled.jpg">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Almonds</h5>
+                            <a href="#" class="btn btn-primary">Add</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="dairy" class="hidden">
+            <h1>
+                Dairy
+            </h1>
+            <div class="container">
+                <div class="row">
+                    <div class="card col-lg-3 col-sm-6  text-center">
+                        <img class="card-img-top" src="Images/Dairy/purina-article-cat-can-cats-drink-milk_500x300.png" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Milk</h5>
+                            <a href="#" class="btn btn-primary">Add</a>
+                        </div>
+                    </div>
+
+                    <div class="card col-lg-3 col-sm-6  text-center">
+                        <img class="card-img-top" src="Images/Dairy/file-20201130-21-zuzh18.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Eggs</h5>
+                            <a href="#" class="btn btn-primary text-center">Add</a>
+                        </div>
+                    </div>
+                    <div class="card col-lg-3 col-sm-6  text-center">
+                        <img class="card-img-top" src="Images/Dairy/Cheese-image-scaled.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Cheese</h5>
+                            <a href="#" class="btn btn-primary">Add</a>
+                        </div>
+                    </div>
+                    <div class="card col-lg-3 col-sm-6  text-center">
+                        <img class="card-img-top" src="Images/Dairy/sourecream.jfif">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Sour Cream</h5>
+                            <a href="#" class="btn btn-primary">Add</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="protein" class="hidden">
+            <h1>
+                Protein
+            </h1>
+            <div class="container">
+                <div class="row">
+                    <div class="card col-lg-3 col-sm-6  text-center">
+                        <img class="card-img-top" src="Images/Protein/image.jfif" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Meat</h5>
+                            <a href="#" class="btn btn-primary">Add</a>
+                        </div>
+                    </div>
+
+                    <div class="card col-lg-3 col-sm-6  text-center">
+                        <img class="card-img-top" src="Images/Protein/chicken.jfif" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Chicken</h5>
+                            <a href="#" class="btn btn-primary text-center">Add</a>
+                        </div>
+                    </div>
+                    <div class="card col-lg-3 col-sm-6  text-center">
+                        <img class="card-img-top" src="Images/Protein/Whole_Fish_Cooking-Blog_Feature.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Fish</h5>
+                            <a href="#" class="btn btn-primary">Add</a>
+                        </div>
+                    </div>
+                    <div class="card col-lg-3 col-sm-6  text-center">
+                        <img class="card-img-top" src="Images/Protein/salmon-fillet-fillets-1200x628-facebook-800x628.jpg">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Salmon</h5>
+                            <a href="#" class="btn btn-primary">Add</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="essentials" class="hidden">
+            <h1>
+                Essentials
+            </h1>
+            <div class="container">
+                <div class="row">
+                    <div class="card col-lg-3 col-sm-6  text-center">
+                        <img class="card-img-top" src="Images/Essentials/AIG3606141.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Toilet Paper</h5>
+                            <a href="#" class="btn btn-primary">Add</a>
+                        </div>
+                    </div>
+
+                    <div class="card col-lg-3 col-sm-6  text-center">
+                        <img class="card-img-top" src="Images/Essentials/Paper_towel_roll_000012273711XSmall.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Paper Towels</h5>
+                            <a href="#" class="btn btn-primary text-center">Add</a>
+                        </div>
+                    </div>
+                    <div class="card col-lg-3 col-sm-6  text-center">
+                        <img class="card-img-top" src="Images/Essentials/istockphoto-874136390-612x612.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Sponge</h5>
+                            <a href="#" class="btn btn-primary">Add</a>
+                        </div>
+                    </div>
+                    <div class="card col-lg-3 col-sm-6  text-center">
+                        <img class="card-img-top" src="Images/Essentials/468d65ed-72ee-4106-be81-554351760002.b0a3009620e42fbb8eb2101dba4049e6.jpeg">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Napkins</h5>
+                            <a href="#" class="btn btn-primary">Add</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="submit" value="Create" class="btn btn-primary" />
+</form>
+
+<!-- Modal -->
+<div class="modal fade" id="cart" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Cart</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="modal_body"></p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Order now</button>
+            </div>
+        </div>
+    </div>
+</div>
+

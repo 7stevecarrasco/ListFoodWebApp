@@ -1,0 +1,74 @@
+﻿@model ListFoodWebApp.ViewModels.ProductViewModel
+
+@if (Model.ProductParentActive)
+{
+    <h1 class="text-center pb-5">
+        @Model.ProductParentName
+    </h1>
+
+    @if (!Model.ProductSubCategories.Any())
+    {
+        @if (string.IsNullOrEmpty(Model.ProductParentImageName))
+        {
+            <img class="card-img-top mb-3" style="max-width: 100%; max-height: 150px; object-fit: contain;" src="/Images/foodcategory-placeholder-image.png" alt="foodcategory-image">
+        }
+        else
+        {
+            <img class="card-img-top mb-3" style="max-width: 100%; max-height: 150px; object-fit: contain;" src="/Images/@Model.ProductParentImageName" alt="foodcategory-image">
+        }
+<div class="text-center">
+    @if (ViewBag.Open == true)
+    {
+
+        <a href="javascript:void(0)" id="@Model.ProductParentId" onclick="AddToCartModal(this.id)" class="btn btn-primary">Add</a>
+        
+    }
+</div>
+    }
+}
+
+
+<div class="row mt-2 mb-5">
+
+    @foreach (var item in Model.ProductSubCategories)
+    {
+        var children = "";
+
+        @foreach (var child in item.Children)
+        {
+            @if (child.Active)
+            {
+                children += child.Name + ", ";
+            }
+        }
+
+        @if (item.ProductActive)
+        {
+            <div class="col-4">
+                <div class="card" style="width: 15rem; margin-bottom: 30px;">
+                    @if (string.IsNullOrEmpty(item.FoodCategoryImageName))
+                    {
+                        <img class="card-img-top mb-3" style="max-width: 100%; max-height: 150px; object-fit: contain;" src="/Images/foodcategory-placeholder-image.png" alt="foodcategory-image">
+                    }
+                    else
+                    {
+                        <img class="card-img-top mb-3" style="max-width: 100%; max-height: 150px; object-fit: contain;" src="/Images/@item.FoodCategoryImageName" alt="foodcategory-image">
+                    }
+                <div class="card-body">
+                    <h5 class="card-title text-center"><span>@item.ProductName</span></h5>
+                  
+                    @if (ViewBag.Open == true)
+                    {
+                      
+                         <a href="javascript:void(0)" id="@item.ProductId" onclick="AddToCartModal(this.id)" class="btn btn-primary btn-block">Add</a>
+                       
+                    }
+                    <hr />
+
+                </div>
+                </div>
+            </div>
+        }
+    }
+
+</div>

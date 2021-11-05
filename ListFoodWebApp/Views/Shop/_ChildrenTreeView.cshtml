@@ -1,0 +1,18 @@
+﻿@model IEnumerable<FoodCategory>
+
+<ul>
+    @foreach (var item in Model)
+    {
+    <li>
+        @if (item.Active)
+        {
+            var numId = "num" + item.FoodCategoryID;
+            var btnId = "btn" + item.FoodCategoryID;
+
+            <input type="number" step="1" min="1" max="100" id="@numId">
+            <a href="javascript:void(0)" id="@item.FoodCategoryID" onclick="AddToCart(this.id)" class="btn btn-primary">Add to cart</a>
+            <h5><a id="@item.FoodCategoryID" href="javascript:void(0)" onclick="">@Html.DisplayFor(modelItem => item.Name)</a></h5>
+        }
+    </li>
+    }
+</ul>

@@ -1,0 +1,23 @@
+﻿@model ListFoodWebApp.Models.Event
+
+<div class="card-body">
+    <div class="row">
+        <div class="d-flex justify-content-center align-items-center">
+            <div class="col-4">
+                <h5 class="mb-0 mr-2 text-success font-weight-normal">@Model.StartDate.ToString("MMMM")</h5>
+            </div>
+            <div class="col-4">
+                <h5 class="mb-0 mr-2 text-success font-weight-normal">@Model.StartDate.Day</h5>
+            </div>
+            <div class="col-4">
+                <h5 class="mb-0 mr-2 text-success font-weight-normal">@Model.StartDate.Year</h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="align-items-center">
+        <p class="text-dark font-weight-bold mb-0">@Model.Title</p>
+        <p class="mb-0">@Model.StartDate.TimeOfDay - @Model.EndDate.TimeOfDay</p>
+        <p class="mb-0">@Model.Description</p>
+    </div>
+</div>

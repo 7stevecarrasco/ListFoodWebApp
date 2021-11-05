@@ -1,0 +1,218 @@
+﻿@model ListFoodWebApp.Models.ViewModels.ShoppingItem
+
+<style>
+    #logo {
+        margin: auto;
+        width: 50%;
+        padding: 10px;
+        text-align: center;
+    }
+
+    #camera {
+        position: absolute;
+        right: -275px;
+    }
+
+    #Image {
+        position: absolute;
+        right: -600px;
+    }
+
+    #nutr td {
+        border: 1px solid black;
+        padding: 10px;
+    }
+
+    #nutr {
+        width: 800px;
+    }
+</style>
+
+
+<br />
+
+<div class="row d-flex justify-content-center">
+    @if (string.IsNullOrEmpty(Model.FoodIcon))
+    {
+        <img class="card-img-top mb-3" style="max-width: 100%; max-height: 150px; object-fit: contain;" src="/Images/foodcategory-placeholder-image.png" alt="foodcategory-image">
+        <h2>@Model.FoodName</h2>
+    }
+    else
+    {
+        <img class="card-img-top mb-3" style="max-width: 100%; max-height: 150px; object-fit: contain;" src="/Images/@Model.FoodIcon" alt="foodcategory-image">
+        <h2>@Model.FoodName</h2>
+    }
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <div id="camera">
+            <input type="button" value="Camera" class="btn btn-primary" />
+        </div>
+        <div id="Image">
+            <table style="border:none;">
+                <tr>
+                    <td>
+                        @*<input type="button" id="update" value="Update Nutrition" href="javascript:void(0)" onclick="updateInfo()" class="btn btn-primary" />*@
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <form asp-action="Fulfill">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="OrderedItemID" />
+            <div id="Item">
+                <div class="form-group">
+                    <label asp-for="Upc_Code" class="control-label"></label>
+                    <input asp-for="Upc_Code" class="form-control" onchange="updateInfo()" />
+                    <span asp-validation-for="Upc_Code" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FoodCategoryID" class="control-label"></label>
+                    <input class="form-control" value="@ViewBag.ListofCategories[0].Text" />
+                    <input type="hidden" asp-for="FoodCategoryID" value="@ViewBag.ListofCategories[0].Value" />
+                    <span asp-validation-for="FoodCategoryID" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Quantity" class="control-label"></label>
+                    <input asp-for="Quantity" class="form-control" />
+                    <span asp-validation-for="Quantity" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+            <div id="NutritionalInfo">
+                <label id="warningLabel"></label>
+                <table caption-side="top" id="nutr">
+                    <caption>Nutritional Info</caption>
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label asp-for="Calories" class="control-label font-weight-bold"></label>
+                                <input asp-for="Calories" class="form-control" type="text" id="calories" />
+                                <span asp-validation-for="Calories" class="text-danger"></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <label asp-for="Fiber" class="control-label font-weight-bold"></label>
+                                <input asp-for="Fiber" class="form-control" id="fiber" />
+                                <span asp-validation-for="Fiber" class="text-danger"></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <label asp-for="VitaminA" class="control-label font-weight-bold">Vitamin A</label>
+                                <input asp-for="VitaminA" class="form-control" id="vitaminA" />
+                                <span asp-validation-for="VitaminA" class="text-danger"></span>
+                            </div>
+                        </td>
+                        <td>
+
+                            <div class="form-group">
+                                <label asp-for="VitaminC" class="control-label font-weight-bold">Vitamin C</label>
+                                <input asp-for="VitaminC" class="form-control" id="vitaminC" />
+                                <span asp-validation-for="VitaminC" class="text-danger"></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <label asp-for="Protein" class="control-label font-weight-bold"></label>
+                                <input asp-for="Protein" class="form-control" id="protein" />
+                                <span asp-validation-for="Protein" class="text-danger"></span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label asp-for="Calcium" class="control-label font-weight-bold"></label>
+                                <input asp-for="Calcium" class="form-control" id="calcium" />
+                                <span asp-validation-for="Calcium" class="text-danger"></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <label asp-for="Iron" class="control-label font-weight-bold"></label>
+                                <input asp-for="Iron" class="form-control" id="iron" />
+                                <span asp-validation-for="Iron" class="text-danger"></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <label asp-for="Sodium" class="control-label font-weight-bold"></label>
+                                <input asp-for="Sodium" class="form-control" id="sodium" />
+                                <span asp-validation-for="Sodium" class="text-danger"></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <label asp-for="AddedSugar" class="control-label font-weight-bold">Added Sugar</label>
+                                <input asp-for="AddedSugar" class="form-control" id="addedSugar" />
+                                <span asp-validation-for="AddedSugar" class="text-danger"></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <label asp-for="SaturatedFat" class="control-label font-weight-bold">Saturated Fat</label>
+                                <input asp-for="SaturatedFat" class="form-control" id="saturatedFat" />
+                                <span asp-validation-for="SaturatedFat" class="text-danger"></span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script>
+                $("#Upc_Code").change(updateInfo());
+                function updateInfo() {
+                    var UpcCode = $('#Upc_Code').val();
+                    $.ajax(
+                        {
+                            type: 'GET',
+                            dataType: 'JSON',
+                            url: "https://world.openfoodfacts.org/api/v0/product/" + UpcCode + ".json",
+                            success:
+                                function (response) {
+                                    $('#calories').val(response['product']['nutriments']['energy-kcal'])
+                                    $('#fiber').val(response['product']['nutriments']['fiber'])
+                                    $('#vitaminA').val(response['product']['nutriments']['vitamin-a'])
+                                    $('#vitaminC').val(response['product']['nutriments']['vitamin-c'])
+                                    $('#protein').val(response['product']['nutriments']['proteins'])
+                                    $('#calcium').val(response['product']['nutriments']['calcium'])
+                                    $('#iron').val(response['product']['nutriments']['iron'])
+                                    $('#sodium').val(response['product']['nutriments']['sodium'])
+                                    $('#addedSugar').val(response['product']['nutriments']['sugars'])
+                                    $('#saturatedFat').val(response['product']['nutriments']['saturated-fat']);
+                                },
+                            error:
+                                function (response) {
+                                    $('#warningLabel').val("UPC code not found, please enter data manually.")
+                                    alert("Error: UPC code not found, " + response);
+                                }
+                        });
+                }
+
+            </script>
+
+
+            <div class="form-group">
+                <input type="submit" value="Add Item" class="btn btn-primary" />
+                @*<input type="submit" value="Add Item" asp-action="AddItem" asp-all-route-data="" asp-route-id="@Model.OrderedItemID" class="btn btn-primary" />*@
+            </div>
+        </form>
+    </div>
+</div>
+
+</div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

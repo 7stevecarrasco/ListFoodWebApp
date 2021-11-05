@@ -1,0 +1,36 @@
+﻿@model IEnumerable<FoodCategory>
+
+
+<link href="~/css/parentCatgories.css" rel="stylesheet" />
+
+<div class="container-fluid">
+    <div class="scrolling-wrapper row flex-row flex-nowrap mt-4 pb-4 pt-2">
+        @foreach (var item in Model)
+        {
+            
+                <div class="card pt-5">
+                    @if (string.IsNullOrEmpty(item.FoodCategoryImageName))
+                    {
+                        <img class="card-img-top mb-3" style="max-width: 100%; max-height: 150px; object-fit: contain;" src="/Images/foodcategory-placeholder-image.png" alt="foodcategory-image">
+                    }
+                    else
+                    {
+                        <img class="card-img-top mb-3" style="max-width: 100%; max-height: 150px; object-fit: contain;" src="/Images/@item.FoodCategoryImageName" alt="foodcategory-image">
+                    }
+                    <div class="card-body">
+                        @if (item.Active)
+                        {
+                            <h5 class="card-title"><span id="@item.FoodCategoryID" onclick="loadMainSection('@item.FoodCategoryID')" style="color: green; cursor: pointer;">@Html.DisplayFor(modelItem => item.Name)</span><i class="fas fa-edit pl-3" style="font-size: 14px; cursor: pointer;" id="@item.FoodCategoryID" onclick="EditCall(this.id)"></i></h5>
+                        }
+                        else
+                        {
+                            <h5 class="card-title"><span id="@item.FoodCategoryID" onclick="loadMainSection('@item.FoodCategoryID')" style="color: red; cursor: pointer;">@Html.DisplayFor(modelItem => item.Name)</span><i class="fas fa-edit pl-3" style="font-size: 14px; cursor: pointer;" id="@item.FoodCategoryID" onclick="EditCall(this.id)"></i></h5>
+                        }
+                    </div>
+                </div>
+            
+        }
+
+    </div>
+</div>
+

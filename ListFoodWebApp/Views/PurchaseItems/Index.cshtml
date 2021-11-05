@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ListFoodWebApp.Models.PurchaseItem>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Purchased Items</h1>
+<table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Purchase Date
+            </th>
+            <th>
+                Expiration Date
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cost)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    
+                </td>
+                <td>
+                    @String.Format("{0:MMMM d, yyyy}", item.PurchaseDate)
+                </td>
+                <td>
+                    @String.Format("{0:MMMM d, yyyy}", item.ExpirationDate)
+                </td>
+                <td>
+                    @String.Format("{0:c}", item.Cost)
+                </td>
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.PurchaseItemID" type="button" class="btn btn-primary">Edit</a> 
+                    <a asp-action="Details" asp-route-id="@item.PurchaseItemID" type="button" class="btn btn-info">Details</a> 
+                    <a asp-action="Delete" asp-route-id="@item.PurchaseItemID" type="button" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<p>
+    <a asp-action="Create" type="button" class="btn btn-primary btn-lg">Add Item</a>
+</p>

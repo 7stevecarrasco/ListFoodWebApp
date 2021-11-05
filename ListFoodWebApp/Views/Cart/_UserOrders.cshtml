@@ -1,0 +1,19 @@
+﻿@model IEnumerable<ListFoodWebApp.Models.Order>
+
+@foreach (var item in Model)
+{
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.OrderID)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Status)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.DateOrdered)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.PickupDate)
+    </td>
+</tr>
+}

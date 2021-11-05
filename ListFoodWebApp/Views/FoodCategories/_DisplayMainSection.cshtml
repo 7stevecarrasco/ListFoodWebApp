@@ -1,0 +1,67 @@
+﻿
+@model ListFoodWebApp.ViewModels.ProductViewModel
+
+@if (Model.ProductParentActive)
+{
+    <h1 class="text-center pb-5" style="color: green;">
+        @Model.ProductParentName<i class="fas fa-edit pl-3" style="font-size: 14px;" id="@Model.ProductParentId" onclick="EditCall(this.id)"></i>
+    </h1>
+}
+else
+{
+    <h1 class="text-center pb-5" style="color: red;">
+        @Model.ProductParentName<i class="fas fa-edit pl-3" style="font-size: 14px;" id="@Model.ProductParentId" onclick="EditCall(this.id)"></i>
+    </h1>
+}
+
+@if (!Model.ProductSubCategories.Any())
+{
+    @if (string.IsNullOrEmpty(Model.ProductParentImageName))
+    {
+        <img class="card-img-top mb-3" style="max-width: 100%; max-height: 150px; object-fit: contain;" src="/Images/foodcategory-placeholder-image.png" alt="foodcategory-image">
+    }
+    else
+    {
+        <img class="card-img-top mb-3" style="max-width: 100%; max-height: 150px; object-fit: contain;" src="/Images/@Model.ProductParentImageName" alt="foodcategory-image">
+    }
+}
+
+<div class="row mt-2 mb-5">
+
+    @foreach (var item in Model.ProductSubCategories)
+    {
+        var children = "";
+        @foreach (var child in item.Children)
+        {
+            children += child.Name + ", ";
+        }
+        <div class="col-4">
+            <div class="card" style="width: 15rem; margin-bottom: 30px;">
+                @if (string.IsNullOrEmpty(item.FoodCategoryImageName))
+                {
+                    <img class="card-img-top mb-3" style="max-width: 100%; max-height: 150px; object-fit: contain;" src="/Images/foodcategory-placeholder-image.png" alt="foodcategory-image">
+                }
+                else
+                {
+                    <img class="card-img-top mb-3" style="max-width: 100%; max-height: 150px; object-fit: contain;" src="/Images/@item.FoodCategoryImageName" alt="foodcategory-image">
+                }
+                <div class="card-body">
+                    @if (item.ProductActive)
+                    {
+                        <h5 class="card-title text-center"><span style="color: green;">@item.ProductName</span><i class="fas fa-edit pl-3" style="font-size: 14px;" id="@item.ProductId" onclick="EditCall(this.id)"></i></h5>
+                    }
+                    else
+                    {
+                        <h5 class="card-title text-center"><span style="color: red;">@item.ProductName</span><i class="fas fa-edit pl-3" style="font-size: 14px;" id="@item.ProductId" onclick="EditCall(this.id)"></i></h5>
+                    }
+                    <hr />
+                    @if (children != "")
+                    {
+                        <p style="font-size: 13px;" class="card-text">@children <span style="color: blue; cursor: pointer;" onclick="ExpandCollapseMenu(this, '@item.ProductId')">(view all)</span></p>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+
+</div>

@@ -1,0 +1,40 @@
+﻿@model IEnumerable<ListFoodWebApp.Models.ViewModels.ShoppingList>
+
+@{
+    ViewData["Title"] = "Shopping List";
+}
+
+<h1>Shopping List</h1>
+
+<br/>
+
+@foreach (var orderedItem in Model)
+{
+    <div>
+        <div class="card m-2">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-dark list-group-item- align-middle">
+                    <div class="d-flex">
+                        <div>
+                            <img class="img-thumbnail mt-1" style="max-width: 50px ; max-height: 100px;" 
+                                 src="/Images/@orderedItem.FoodIcon" alt="FoodIcon">
+                        </div>
+                        <div class="p-2 pt-3">@orderedItem.FoodName</div>
+                        <div class="p-2 pt-3 ml-auto">
+                            @orderedItem.FulfillStatus 
+                        </div>
+                        <div class="p-2 pt-3">
+                            Qty: @orderedItem.Quantity
+                        </div>
+                        @if (orderedItem.FulfillStatus.Equals("Unfulfilled"))
+                        {
+                            <div class="p-2">
+                            <a asp-action="Fulfill" asp-route-id="@orderedItem.FoodCategoryID" class="btn btn-primary">Fufill</a>
+                        </div>
+                        }
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+}

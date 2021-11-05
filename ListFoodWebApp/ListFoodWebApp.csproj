@@ -1,0 +1,57 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.12" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.12" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.12">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
+    <PackageReference Include="Nancy" Version="2.0.0" />
+    <PackageReference Include="SendGrid" Version="9.22.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Images\Dairy\Cheese-image-scaled.jpg" />
+    <None Include="wwwroot\Images\Dairy\file-20201130-21-zuzh18.jpg" />
+    <None Include="wwwroot\Images\Dairy\purina-article-cat-can-cats-drink-milk_500x300.png" />
+    <None Include="wwwroot\Images\Dairy\sourecream.jfif" />
+    <None Include="wwwroot\Images\Essentials\468d65ed-72ee-4106-be81-554351760002.b0a3009620e42fbb8eb2101dba4049e6.jpeg" />
+    <None Include="wwwroot\Images\Essentials\AIG3606141.jpg" />
+    <None Include="wwwroot\Images\Essentials\istockphoto-874136390-612x612.jpg" />
+    <None Include="wwwroot\Images\Essentials\Paper_towel_roll_000012273711XSmall.jpg" />
+    <None Include="wwwroot\Images\Fruit\109-1095681_citrullus-cut-food-fruit-watermelon-parfait-lanatus-watermelon.png" />
+    <None Include="wwwroot\Images\Fruit\42E9as7NaTaAi4A6JcuFwG-1200-80.jpg" />
+    <None Include="wwwroot\Images\Fruit\download.jfif" />
+    <None Include="wwwroot\Images\Fruit\Grapes.jpg" />
+    <None Include="wwwroot\Images\Fruit\resize.webp" />
+    <None Include="wwwroot\Images\Fruit\tangerines-close-up-royalty-free-image-966415250-1552676109.jpg" />
+    <None Include="wwwroot\Images\Fruit\WKM0X.jpg" />
+    <None Include="wwwroot\Images\Grains\AdobeStock_281164530_1024x1024.jpg" />
+    <None Include="wwwroot\Images\Grains\Almond_edited-scaled.jpg" />
+    <None Include="wwwroot\Images\Grains\Fresh_made_bread_05.jpg" />
+    <None Include="wwwroot\Images\Grains\high-angle-view-of-breakfast-cereals-served-in-royalty-free-image-742259785-1543862988.jpg" />
+    <None Include="wwwroot\Images\Protein\chicken.jfif" />
+    <None Include="wwwroot\Images\Protein\image.jfif" />
+    <None Include="wwwroot\Images\Protein\salmon-fillet-fillets-1200x628-facebook-800x628.jpg" />
+    <None Include="wwwroot\Images\Protein\Whole_Fish_Cooking-Blog_Feature.jpg" />
+    <None Include="wwwroot\Images\Vegi\1371616351150.jpeg" />
+    <None Include="wwwroot\Images\Vegi\brave-heart-romaine-lettuce.jpg" />
+    <None Include="wwwroot\Images\Vegi\Celery.jpg" />
+    <None Include="wwwroot\Images\Vegi\Spinach-for-Babies-scaled.jpg" />
+  </ItemGroup>
+
+</Project>

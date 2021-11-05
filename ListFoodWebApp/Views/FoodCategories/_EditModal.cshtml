@@ -1,0 +1,87 @@
+﻿@model ListFoodWebApp.Models.FoodCategory
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="row">
+    <div class="col">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="FoodCategoryID" />
+            <div class="form-group text-center">
+                @if (string.IsNullOrEmpty(Model.FoodCategoryImageName))
+                {
+                    <img class="card-img-top mb-3 shadow-lg white rounded" style="max-width: 200px; max-height: 200px;" src="/Images/foodcategory-placeholder-image.png" alt="foodcategory-image">
+                }
+                else
+                {
+                    <img class="card-img-top mb-3 shadow-lg white rounded" style="max-width: 200px; max-height: 200px;" src="/Images/@Model.FoodCategoryImageName" alt="foodcategory-image">
+                }
+
+            </div>
+            <div class="form-group">
+                <h6>Replace Image</h6>
+                <div class="custom-file">
+                    <input type="file" name="file" class="custom-file-input" id="customEditFile">
+                    <label class="custom-file-label" for="customEditFile">Select an image...</label>
+                    <input type="hidden" asp-for="FoodCategoryImageName" />
+                </div>
+            </div>
+            <div class="form-group">
+                <h6 class=""><label asp-for="Name" class="control-label"></label></h6>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <h6 class=""><label asp-for="ParentCategoryID" class="control-label"></label></h6>
+                @{
+                    var selectListItems = ViewBag.CategoryTree;
+
+                    @Html.DropDownList("ParentCategoryID", selectListItems, "Select Food Categories", new { @class = "form-control" })
+                }
+
+                <span asp-validation-for="ParentCategoryID" class="text-danger"></span>
+            </div>
+            <h6>Status:</h6>
+            <div class="form-group">
+                <span class="col-3">@Html.DisplayNameFor(model => model.Active)</span>
+                <input class="col-1 form-check-input" asp-for="Active" />
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h5>Subcategories:</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            @foreach (var item in Model.Children)
+                            {
+                                <p style="margin-bottom: 0px;">
+                                    @item.Name
+                                    <input type="checkbox" name="checkedCategoryIds" value="@item.FoodCategoryID.ToString()" @(item.Active ? "checked='checked'" : "") />
+
+                                </p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col text-center">
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-success pl-5 pr-5" />
+                    </div>
+                </div>
+            </div>
+        </form>
+        <hr />
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
